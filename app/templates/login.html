@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Manager</title>
+  <link rel="stylesheet" href="/static/login_design.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Password Manager</h1>
+    <p class="intro">Manage your passwords securely and easily</p>
+
+    <div class="login-form">
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button onclick="login()">Login</button>
+    </div>
+
+    <div class="signup">
+      <p>Don't have an account? <a href="#">Sign up</a></p>
+    </div>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      if (username && password) {
+        alert('Logged in successfully!');
+      } else {
+        alert('Please fill in both fields.');
+      }
+    }
+  </script>
+</body>
+</html>
