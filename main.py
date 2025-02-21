@@ -1,8 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
@@ -10,12 +11,44 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 templates = Jinja2Templates(directory="app/templates")
 
+listUsernames = []
+listPasswords = []
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.post("/login/")
+async def login(username: str = Form(...), password: str = Form(...)):
+    for i in listUsernames:
+        if username == i and password == "password":
+            return {"status": "success", "message": "Login successful!"}
+    return {"status": "error", "message": "Invalid credentials"}
+
+@app.post("/signup/")
+async def signup(username: str = Form(...), password: str = Form(...)):
+    for i in listUsernames:
+        if username == i:
+            return {"status": "error", "message": "Already in use!"}
+    listUsernames.append(username)
+    listPasswords.append(password)
+    return {"status": "success", "message": "Signup successful!"}
+
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     message = "Backend test"
-    return templates.TemplateResponse("login.html", {"request": request, "message": message})
+    return templates.TemplateResponse("home.html", {"request": request, "message": message})
 
 @app.get("/login.html", response_class=HTMLResponse)
 async def read_root(request: Request):
     message = "Backend test"
     return templates.TemplateResponse("login.html", {"request": request, "message": message})
+
+@app.get("/signup.html", response_class=HTMLResponse)
+async def read_root(request: Request):
+    message = "Backend test"
+    return templates.TemplateResponse("signup.html", {"request": request, "message": message})

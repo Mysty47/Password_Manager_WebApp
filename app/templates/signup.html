@@ -14,16 +14,14 @@
     <div class="login-form">
       <input type="text" id="username" placeholder="Username" required>
       <input type="password" id="password" placeholder="Password" required>
-      <button onclick="login()">Login</button>
-    </div>
-
-    <div class="signup">
-      <p>Don't have an account? <a href="/signup.html">Sign up</a></p>
+       <a href ="login.html">
+        <button onclick="signup()">Sign up</button>
+       </a>
     </div>
   </div>
 
   <script>
-    async function login() {
+    async function signup() {
       const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
@@ -36,7 +34,7 @@
     formData.append("username", username);
     formData.append("password", password);
 
-    const response = await fetch("http://127.0.0.1:8000/login/", {
+    const response = await fetch("http://127.0.0.1:8000/signup/", {
       method: "POST",
       body: formData
     });
@@ -45,7 +43,6 @@
 
     if (result.status === "success") {
       alert(result.message);
-      // Redirect user or store token here
     } else {
       alert(result.message);
     }
