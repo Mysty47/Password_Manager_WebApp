@@ -11,8 +11,15 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 templates = Jinja2Templates(directory="app/templates")
 
-listUsernames = []
-listPasswords = []
+isLogged = False
+
+#Temp
+listUsernames_forLogin = []
+listPasswords_forLogin = []
+
+# Temp
+listSavedLocations = []
+listSavedPasswords = []
 
 app.add_middleware(
     CORSMiddleware,
@@ -24,18 +31,19 @@ app.add_middleware(
 
 @app.post("/login/")
 async def login(username: str = Form(...), password: str = Form(...)):
-    for i in listUsernames:
+    for i in listUsernames_forLogin:
         if username == i and password == "password":
+            isLogged = True
             return {"status": "success", "message": "Login successful!"}
     return {"status": "error", "message": "Invalid credentials"}
 
 @app.post("/signup/")
 async def signup(username: str = Form(...), password: str = Form(...)):
-    for i in listUsernames:
+    for i in listUsernames_forLogin:
         if username == i:
             return {"status": "error", "message": "Already in use!"}
-    listUsernames.append(username)
-    listPasswords.append(password)
+    listUsernames_forLogin.append(username)
+    listPasswords_forLogin.append(password)
     return {"status": "success", "message": "Signup successful!"}
 
 @app.get("/", response_class=HTMLResponse)
