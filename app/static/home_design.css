@@ -1,111 +1,172 @@
-/* Общи стилове за страницата */
+/* General Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f4f8;
-  }
-  
-  h1, h2 {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  /* Навигационен бар */
-  .navbar {
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .navbar-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  h1 {
-    margin-right: 20px;
-    font-size: 1.8rem;
-  }
-  
-  .dropdown {
-    position: relative;
-    margin-right: 20px;
-  }
-  
-  .dropdown-btn {
-    background-color: #333;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .dropdown-btn:hover {
-    background-color: #444;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    top: 40px;
-    background-color: #333;
-    min-width: 160px;
-    border-radius: 5px;
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    color: white;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .dropdown-content a:hover {
-    background-color: #444;
-  }
-  
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  
-  /* Бутон за вход */
-  .login-btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .login-btn:hover {
-    background-color: #45a049;
-  }
-  
-  /* Основна секция на страницата */
-  .container {
-    text-align: center;
-    margin-top: 50px;
-  }
-  
-  .container h2 {
-    font-size: 2rem;
-    color: #333;
-  }
-  
-  .container p {
-    font-size: 1rem;
-    color: #777;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f4f8;
+  margin: 0;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+}
+
+h1 {
+  margin-right: 20px;
+  font-size: 1.8rem;
+}
+
+.dropdown {
+  position: relative;
+  margin-right: 20px;
+}
+
+.dropdown-btn {
+  background-color: #333;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.dropdown-btn:hover {
+  background-color: #444;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 40px;
+  background-color: #333;
+  min-width: 160px;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #444;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.login-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.login-btn:hover {
+  background-color: #45a049;
+}
+
+/* Container for Main Content */
+.container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Search Bar Section */
+.search-container {
+  margin: 20px 0;
+}
+
+#search-bar {
+  padding: 10px;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+/* Generated Password Section */
+#generated-password {
+  margin-top: 20px;
+}
+
+#password-display {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+button {
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Save New Password Section */
+#save-password {
+  margin-top: 20px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Password List */
+#password-list {
+  margin-top: 30px;
+}
+
+.password-item {
+  background-color: #fff;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.password-name {
+  font-weight: bold;
+}
+
+.password-value {
+  color: #555;
+}

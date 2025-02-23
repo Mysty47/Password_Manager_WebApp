@@ -11,16 +11,10 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 templates = Jinja2Templates(directory="app/templates")
 
-isLogged = False
+# Temporary in-memory storage for demo purposes
+saved_passwords = []
 
-#Temp
-listUsernames_forLogin = []
-listPasswords_forLogin = []
-
-# Temp
-listSavedLocations = []
-listSavedPasswords = []
-
+# Enable CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -31,32 +25,34 @@ app.add_middleware(
 
 @app.post("/login/")
 async def login(username: str = Form(...), password: str = Form(...)):
-    for i in listUsernames_forLogin:
-        if username == i and password == "password":
-            isLogged = True
-            return {"status": "success", "message": "Login successful!"}
+    # Simple login logic (credentials for now)
+    if username == "testuser" and password == "password":
+        return {"status": "success", "message": "Login successful!"}
     return {"status": "error", "message": "Invalid credentials"}
 
 @app.post("/signup/")
 async def signup(username: str = Form(...), password: str = Form(...)):
-    for i in listUsernames_forLogin:
-        if username == i:
-            return {"status": "error", "message": "Already in use!"}
-    listUsernames_forLogin.append(username)
-    listPasswords_forLogin.append(password)
+    # Simple signup logic 
     return {"status": "success", "message": "Signup successful!"}
+
+@app.post("/save_password/")
+async def save_password(name: str = Form(...), password: str = Form(...)):
+    saved_passwords.append({"name": name, "password": password})
+    return {"status": "success", "message": "Password saved successfully!"}
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    message = "Backend test"
+    message = "Welcome to the Password Manager!"
     return templates.TemplateResponse("home.html", {"request": request, "message": message})
 
 @app.get("/login.html", response_class=HTMLResponse)
-async def read_root(request: Request):
-    message = "Backend test"
-    return templates.TemplateResponse("login.html", {"request": request, "message": message})
+async def login_page(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
 
 @app.get("/signup.html", response_class=HTMLResponse)
-async def read_root(request: Request):
-    message = "Backend test"
-    return templates.TemplateResponse("signup.html", {"request": request, "message": message})
+async def signup_page(request: Request):
+    return templates.TemplateResponse("signup.html", {"request": request})
+
+@app.get("/saved_passwords")
+async def get_saved_passwords():
+    return {"passwords": saved_passwords}
