@@ -11,26 +11,36 @@
 
   // Save password to the list
   function savePassword() {
-    const passwordName = document.getElementById("new-password-name").value;
-    const passwordValue = document.getElementById("password-display").textContent;
+    const passwordName = document.getElementById("new-password-name").value.trim();
+    const passwordInput = document.getElementById("new-password-input").value.trim();
+    const passwordDisplay = document.getElementById("password-display").textContent;
 
-    if (!passwordName || passwordValue === "Your new password will appear here.") {
-      alert("Please generate a password and enter a password name.");
-      return;
+    // Use manually entered password if available; otherwise, use the generated one
+    let passwordToSave = passwordInput ? passwordInput : (passwordDisplay !== "Your new password will appear here." ? passwordDisplay : "");
+
+    if (!passwordName || !passwordToSave) {
+        alert("Please enter a password name and either type a password or generate one.");
+        return;
     }
 
+    // Create password entry
     const passwordItem = document.createElement("div");
     passwordItem.classList.add("password-item");
     passwordItem.innerHTML = `
-      <div class="password-name">${passwordName}</div>
-      <div class="password-value">${passwordValue}</div>
+      <div class="password-name"><strong>${passwordName}</strong></div>
+      <div class="password-value">${passwordToSave}</div>
     `;
     document.getElementById("saved-passwords").appendChild(passwordItem);
 
-    // Reset the input fields
+    // Reset input fields properly
     document.getElementById("new-password-name").value = "";
+    document.getElementById("new-password-input").value = "";
     document.getElementById("password-display").textContent = "Your new password will appear here.";
-  }
+}
+
+
+
+
 
   // Generate new password when the button is clicked
   document.getElementById("generate-btn").addEventListener("click", function() {
@@ -55,3 +65,5 @@
       }
     });
   });
+
+  // Password

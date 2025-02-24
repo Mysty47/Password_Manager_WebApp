@@ -39,7 +39,7 @@ async def signup(username: str = Form(...), password: str = Form(...)):
 async def save_password(name: str = Form(...), password: str = Form(...)):
     saved_passwords.append({"name": name, "password": password})
     return {"status": "success", "message": "Password saved successfully!"}
-
+    
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     message = "Welcome to the Password Manager!"
