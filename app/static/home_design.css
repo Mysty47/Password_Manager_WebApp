@@ -8,9 +8,16 @@
 /* Body */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f4f8;
+  /* background-color: #f0f4f8; */
   margin: 0;
-  background-color: #c3cbb9;
+  /* background-color: #c3cbb9; */
+  background-image: url('/static/images/background1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;  /* Ensures the image covers the whole viewport */
+  background-position: center;  /* Centers the image */
+  background-repeat: no-repeat;  /* Prevents repeating */
+  background-attachment: fixed;  /* Keeps the image fixed while scrolling */
+  height: 100vh;  /* Ensures the body is at least the height of the viewport */
 }
 
 /* Navbar */
