@@ -38,10 +38,6 @@
     document.getElementById("password-display").textContent = "Your new password will appear here.";
 }
 
-
-
-
-
   // Generate new password when the button is clicked
   document.getElementById("generate-btn").addEventListener("click", function() {
     const newPassword = generateRandomPassword();

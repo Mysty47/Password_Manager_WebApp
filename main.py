@@ -11,8 +11,9 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 templates = Jinja2Templates(directory="app/templates")
 
-# Temporary in-memory storage for demo purposes
+# Temporary storage of login info
 saved_passwords = []
+saved_login_info ={"" : ""}
 
 # Enable CORS
 app.add_middleware(
@@ -25,14 +26,13 @@ app.add_middleware(
 
 @app.post("/login/")
 async def login(username: str = Form(...), password: str = Form(...)):
-    # Simple login logic (credentials for now)
-    if username == "testuser" and password == "password":
+    if username in saved_login_info and saved_login_info[username] == password:
         return {"status": "success", "message": "Login successful!"}
     return {"status": "error", "message": "Invalid credentials"}
 
 @app.post("/signup/")
 async def signup(username: str = Form(...), password: str = Form(...)):
-    # Simple signup logic 
+    saved_login_info[username] = password
     return {"status": "success", "message": "Signup successful!"}
 
 @app.post("/save_password/")
