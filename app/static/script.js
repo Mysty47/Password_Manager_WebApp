@@ -17,9 +17,20 @@
     const passwordInput = document.getElementById("new-password-input").value.trim();
     const passwordDisplay = document.getElementById("password-display").textContent;
 
-    // Use manually entered password if available; otherwise, use the generated one
+    // Check length restrictions properly
+    
+    if (passwordName.length > 16) {
+        alert("Password name should not exceed 16 characters.");
+        return;
+    }
+    if (passwordInput.length > 16) {
+        alert("Password should not exceed 16 characters.");
+        return;
+    }
 
-    let passwordToSave = passwordInput ? passwordInput : (passwordDisplay !== "Your new password will appear here." ? passwordDisplay : "");
+    // Determine which password to save
+
+    let passwordToSave = passwordInput || (passwordDisplay !== "Your new password will appear here." ? passwordDisplay : "");
 
     if (!passwordName || !passwordToSave) {
         alert("Please enter a password name and either type a password or generate one.");

@@ -52,7 +52,7 @@ async def save_password(name: str = Form(...), password: str = Form(...)):
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    message = "Welcome to the Password Manager!"
+    message = "Backend Connected!"
     return templates.TemplateResponse("home.html", {"request": request, "message": message})
 
 # Login Page

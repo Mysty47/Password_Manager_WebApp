@@ -10,14 +10,7 @@ body {
   font-family: Arial, sans-serif;
   /* background-color: #f0f4f8; */
   margin: 0;
-  /* background-color: #c3cbb9; */
-  background-image: url('/static/images/background1.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;  /* Ensures the image covers the whole viewport */
-  background-position: center;  /* Centers the image */
-  background-repeat: no-repeat;  /* Prevents repeating */
-  background-attachment: fixed;  /* Keeps the image fixed while scrolling */
-  height: 100vh;  /* Ensures the body is at least the height of the viewport */
+  background-color: #c3cbb9; 
 }
 
 /* Navbar */
@@ -172,19 +165,75 @@ input[type="text"] {
   margin-top: 30px;
 }
 
+#saved-passwords {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.password-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-height: 120px;
+}
+
+.password-card {
+  width: 200px; /* Или друга фиксирана стойност */
+  height: 100px; /* Ако искаш и фиксирана височина */
+  flex-shrink: 0; /* Предотвратява свиването */
+}
+
+
 .password-item {
-  background-color: #c3cbb9;
+  width: 250px; /* Фиксирана ширина */
+  height: 100px; /* Фиксирана височина */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
   padding: 15px;
-  margin: 10px 0;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: #333;
+  border: 1px solid #333;
+  text-align: center;
+  flex-shrink: 0; /* Prevents shrinking */
+  overflow: hidden; /* Prevents the streching of the boxes */
+  white-space: nowrap; /* doesnt allow going on the next line */
+  text-overflow: ellipsis; /* Adds ... when text is too long */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.password-item:hover {
+  transform: scale(1.1) translateY(-5px);
+  background-color: #1abc9c;
+  color: rgb(57, 57, 57);
+  .password-value {
+    color: rgb(172, 170, 170);
+    font-weight: bold;
+  }
 }
 
 .password-name {
   font-weight: bold;
+  font-size: x-large;
 }
 
 .password-value {
   color: #555;
+  font-size: x-large;
+}
+
+h3 {
+  font-size: xx-large;
+  color: white;
+  font-weight: bold;
+  -webkit-text-stroke: rgb(0, 0, 0) 1px;
+  border: #333;
+  border-style: solid 1px;
 }
