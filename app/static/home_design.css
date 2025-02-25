@@ -10,6 +10,7 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f0f4f8;
   margin: 0;
+  background-color: #c3cbb9;
 }
 
 /* Navbar */
@@ -132,8 +133,17 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #467848;
 }
+
+.login-btn {
+  display: inline-block;
+}
+
+.hidden {
+  display: none;
+}
+
 
 /* Save New Password Section */
 #save-password {
@@ -156,11 +166,12 @@ input[type="text"] {
 }
 
 .password-item {
-  background-color: #fff;
+  background-color: #c3cbb9;
   padding: 15px;
   margin: 10px 0;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: #333;
 }
 
 .password-name {
