@@ -12,13 +12,11 @@
 
   // Save password to the list
 
-  function savePassword() {
+  async function savePassword() {
     const passwordName = document.getElementById("new-password-name").value.trim();
     const passwordInput = document.getElementById("new-password-input").value.trim();
     const passwordDisplay = document.getElementById("password-display").textContent;
 
-    // Check length restrictions properly
-    
     if (passwordName.length > 16) {
         alert("Password name should not exceed 16 characters.");
         return;
@@ -28,8 +26,6 @@
         return;
     }
 
-    // Determine which password to save
-
     let passwordToSave = passwordInput || (passwordDisplay !== "Your new password will appear here." ? passwordDisplay : "");
 
     if (!passwordName || !passwordToSave) {
@@ -37,22 +33,38 @@
         return;
     }
 
-    // Create password entry
+    // Send the password to FastAPI
+    try {
+        const response = await fetch("http://127.0.0.1:8000/save_password/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: passwordName,
+                password: passwordToSave
+            })
+        });
 
-    const passwordItem = document.createElement("div");
-    passwordItem.classList.add("password-item");
-    passwordItem.innerHTML = `
-      <div class="password-name"><strong>${passwordName}</strong></div>
-      <div class="password-value">${passwordToSave}</div>
-    `;
-    document.getElementById("saved-passwords").appendChild(passwordItem);
-
-    // Reset input fields properly
+        const result = await response.json();
+        if (result.status === "success") {
+            loadPasswords(); // Refresh password list
+        } else {
+            alert("Error saving password: " + result.message);
+        }
+    } catch (error) {
+        console.error("Error saving password:", error);
+        alert("Failed to save password.");
+    }
 
     document.getElementById("new-password-name").value = "";
     document.getElementById("new-password-input").value = "";
     document.getElementById("password-display").textContent = "Your new password will appear here.";
 }
+
+// Attach event listener to save button
+document.getElementById("save-password-btn").addEventListener("click", savePassword);
+
 
   // Generate new password when the button is clicked
 
@@ -107,6 +119,68 @@
     });
 });
 
+async function fetchPasswords() {
+  try {
+      const response = await fetch("http://127.0.0.1:8000/saved_passwords"); // Adjust the URL if needed
+      const data = await response.json();
 
+      if (data.passwords) {
+          displayPasswords(data.passwords);
+      } else {
+          console.error("Error fetching passwords:", data.message);
+      }
+  } catch (error) {
+      console.error("Fetch error:", error);
+  }
+}
 
-  // Password
+// Function to display passwords in the UI
+function displayPasswords(passwords) {
+  const container = document.getElementById("saved-passwords");
+  container.innerHTML = ""; // Clear previous entries
+
+  passwords.forEach(item => {
+      const passwordItem = document.createElement("div");
+      passwordItem.classList.add("password-item");
+      passwordItem.innerHTML = `
+          <div><strong>${item.place}</strong>: ${item.password}</div>
+      `;
+      container.appendChild(passwordItem);
+  });
+}
+
+// Call the function when the page loads
+document.addEventListener("DOMContentLoaded", fetchPasswords);
+
+// Function to fetch saved passwords and display them
+async function loadPasswords() {
+  try {
+      const response = await fetch("http://127.0.0.1:8000/saved_passwords");
+      const data = await response.json();
+
+      const passwordContainer = document.getElementById("saved-passwords");
+      passwordContainer.innerHTML = ""; // Clear existing content
+
+      if (data.passwords.length === 0) {
+          passwordContainer.innerHTML = "<p>No saved passwords found.</p>";
+          return;
+      }
+
+      data.passwords.forEach(password => {
+          const passwordItem = document.createElement("div");
+          passwordItem.classList.add("password-item");
+          passwordItem.innerHTML = `
+              <div class="password-name"><strong>${password.name}</strong></div>
+              <div class="password-value">${password.password}</div>
+          `;
+          passwordContainer.appendChild(passwordItem);
+      });
+
+  } catch (error) {
+      console.error("Error fetching saved passwords:", error);
+      document.getElementById("saved-passwords").innerHTML = "<p>Error loading passwords.</p>";
+  }
+}
+
+// Run the function when the page loads
+document.addEventListener("DOMContentLoaded", loadPasswords);

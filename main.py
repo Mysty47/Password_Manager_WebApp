@@ -4,9 +4,15 @@ from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, Form, HTTPException
+from pydantic import BaseModel
 import mysql.connector
 
 app = FastAPI()
+
+class PasswordEntry(BaseModel):
+    name: str
+    password: str
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
@@ -32,8 +38,8 @@ def get_db_connection():
 
 # Temporary storage of login info
 
-saved_passwords = []
-saved_login_info ={"" : ""}
+# saved_passwords = []
+# saved_login_info ={"" : ""}
 
 # Enable CORS
 
@@ -75,7 +81,7 @@ async def signup(username: str = Form(...), password: str = Form(...)):
         return {"status": "error", "message": "Database connection failed"}
 
     cursor = connection.cursor()
-    cursor.execute("INSERT INTO login_info.webappdb (id, username, password) VALUES (%d, %s, %s)", (1, username, password))
+    cursor.execute("INSERT INTO login_info.webappdb (username, password) VALUES (%s, %s)", (username, password))
     connection.commit()
 
     cursor.close()
@@ -83,23 +89,41 @@ async def signup(username: str = Form(...), password: str = Form(...)):
 
     return {"status": "success", "message": "Signup successful!"}
 
+# Saving the password
+
+@app.post("/save_password/")
+async def save_password(entry: PasswordEntry):
+    connection = get_db_connection()
+    if not connection:
+        raise HTTPException(status_code=500, detail="Database connection failed")
+
+    try:
+        cursor = connection.cursor()
+        cursor.execute("INSERT INTO login_info.saved_passwords (name, password) VALUES (%s, %s)",
+                       (entry.name, entry.password))
+        connection.commit()
+        cursor.close()
+        connection.close()
+        return {"status": "success", "message": "Password saved successfully!"}
+    except mysql.connector.Error as err:
+        return {"status": "error", "message": str(err)}
 
 # After saving password
 
-@app.post("/save_password/")
-async def save_password(name: str = Form(...), password: str = Form(...)):
+@app.get("/saved_passwords")
+async def get_saved_passwords():
     connection = get_db_connection()
     if not connection:
         return {"status": "error", "message": "Database connection failed"}
 
-    cursor = connection.cursor()
-    cursor.execute("INSERT INTO users (place, password) VALUES (%s, %s)", (name, password))
-    connection.commit()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("SELECT name, password FROM login_info.saved_passwords")
+    passwords = cursor.fetchall()
 
     cursor.close()
     connection.close()
 
-    return {"status": "success", "message": "Password saved successfully!"}
+    return {"passwords": passwords}
     
 # Home page
 
