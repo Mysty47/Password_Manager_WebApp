@@ -8,9 +8,13 @@
 /* Body */
 body {
   font-family: Arial, sans-serif;
-  /* background-color: #f0f4f8; */
+  background-image: url('/static/images/homepage_background.png');
+  background-repeat: no-repeat;
+  background-size: cover;  /* Ensures the image covers the whole viewport */
+  background-position: center;  /* Centers the image */
+  background-repeat: no-repeat;  /* Prevents repeating */
+  background-attachment: fixed;  /* Keeps the image fixed while scrolling */
   margin: 0;
-  background-color: #c3cbb9; 
 }
 
 /* Navbar */
@@ -211,7 +215,7 @@ input[type="text"] {
 
 .password-item:hover {
   transform: scale(1.1) translateY(-5px);
-  background-color: #1abc9c;
+  background-color: #d1bd25;
   color: rgb(57, 57, 57);
   .password-value {
     color: rgb(172, 170, 170);
