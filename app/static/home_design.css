@@ -112,7 +112,7 @@ body::before {
 
 /* Navbar */
 .navbar {
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 247, 255, 0.98) 100%);
   padding: 15px 30px;
   position: fixed;
   width: 100%;
@@ -134,12 +134,7 @@ body::before {
   padding: 0 20px;
 }
 
-.nav-buttons {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
+/* Logo */
 h1 {
   font-size: 1.8rem;
   color: #2c3e50;
@@ -149,29 +144,42 @@ h1 {
   -webkit-text-fill-color: transparent;
   animation: shine 3s infinite;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
-@keyframes shine {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
+h1::before {
+  content: '🔐';
+  font-size: 2rem;
+  animation: bounce 2s infinite;
 }
 
-/* Dropdown Menu */
-.dropdown {
-  position: relative;
-  display: inline-block;
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
+/* Nav Buttons */
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Menu Button */
 .dropdown-btn {
   background: linear-gradient(135deg, #27ae60 0%, #2ecc71 50%, #3498db 100%);
   color: #ffffff;
   padding: 12px 25px;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 1rem;
   transition: all 0.3s ease;
-  font-weight: bold;
+  font-weight: 600;
   position: relative;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(46, 204, 113, 0.2);
@@ -179,10 +187,77 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 120px;
+  width: 120px;
   text-decoration: none;
+  letter-spacing: 0.5px;
 }
 
+.dropdown-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: 0.5s;
+}
+
+.dropdown-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.3);
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 50%, #3498db 100%);
+}
+
+.dropdown-btn:hover::before {
+  left: 100%;
+}
+
+/* Login Button */
+.login-btn {
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 50%, #3498db 100%);
+  color: #ffffff;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.2);
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.login-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: 0.5s;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.3);
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 50%, #3498db 100%);
+}
+
+.login-btn:hover::before {
+  left: 100%;
+}
+
+/* Dropdown Menu */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -219,6 +294,82 @@ h1 {
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+/* User Info */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.username {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 8px 15px;
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 50%, #3498db 100%);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.2);
+  letter-spacing: 0.5px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.username::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: 0.5s;
+}
+
+.username:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.3);
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 50%, #3498db 100%);
+}
+
+.username:hover::before {
+  left: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 20px;
+  }
+  
+  .navbar-container {
+    padding: 0 15px;
+  }
+  
+  .nav-buttons {
+    gap: 10px;
+  }
+  
+  .dropdown-btn, .login-btn, .username {
+    width: 100px;
+    height: 40px;
+    font-size: 0.9rem;
+    padding: 0 15px;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+  }
+  
+  h1::before {
+    font-size: 1.7rem;
+  }
 }
 
 /* Login and Signup Forms */
@@ -682,39 +833,189 @@ h1 {
 /* Generated Password Section */
 #generated-password {
   margin: 30px 0;
-  padding: 25px;
+  padding: 30px;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
   border: 2px solid rgba(46, 204, 113, 0.2);
   box-shadow: 0 4px 15px rgba(46, 204, 113, 0.1);
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
 }
 
-#generated-password:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(46, 204, 113, 0.15);
-  border-color: rgba(46, 204, 113, 0.4);
-}
-
-#password-display {
-  margin-top: 15px;
-  font-size: 1.4rem;
+#generated-password h3 {
+  font-size: 1.8rem;
   color: #2c3e50;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.9);
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #2c3e50, #27ae60, #3498db);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s infinite;
+}
+
+#generate-btn {
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 50%, #3498db 100%);
+  color: #ffffff;
+  padding: 12px 25px;
+  border: none;
   border-radius: 12px;
-  word-break: break-all;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.2);
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  margin: 20px auto;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+#generate-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: 0.5s;
+}
+
+#generate-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.3);
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 50%, #3498db 100%);
+}
+
+#generate-btn:hover::before {
+  left: 100%;
+}
+
+/* Save Password Section */
+#save-password {
+  margin: 30px 0;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
   border: 2px solid rgba(46, 204, 113, 0.2);
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.1);
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-#password-display:hover {
-  background: rgba(255, 255, 255, 0.95);
-  transform: scale(1.02);
-  border-color: rgba(46, 204, 113, 0.4);
-  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.1);
+#save-password h3 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #2c3e50, #27ae60, #3498db);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s infinite;
+  text-align: center;
+}
+
+#save-password .input-group {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+#save-password input {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #2c3e50;
+  transition: all 0.3s ease;
+  margin: 0;
+}
+
+#save-password input:focus {
+  outline: none;
+  border-color: #27ae60;
+  box-shadow: 0 0 20px rgba(46, 204, 113, 0.15);
+  transform: translateY(-2px);
+}
+
+#save-password .save-btn {
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 50%, #3498db 100%);
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  width: 200px;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 45px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 20px;
+  }
+  
+  .navbar-container {
+    padding: 0 15px;
+  }
+  
+  .nav-buttons {
+    gap: 10px;
+  }
+  
+  .dropdown-btn, .login-btn, .username {
+    width: 100px;
+    height: 40px;
+    font-size: 0.9rem;
+    padding: 0 15px;
+  }
+  
+  #save-password {
+    padding: 20px;
+    margin: 20px 0;
+  }
+  
+  #save-password h3 {
+    font-size: 1.5rem;
+  }
+  
+  #save-password input {
+    padding: 14px 18px;
+    font-size: 0.95rem;
+  }
+  
+  #save-password .save-btn {
+    width: 180px;
+    height: 40px;
+    font-size: 0.9rem;
+    padding: 0 15px;
+  }
 }
 
 /* Password List */
@@ -802,46 +1103,6 @@ h2 {
   animation: fadeIn 0.5s ease-out;
 }
 
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.username {
-  color: #ffffff;
-  font-size: 1.1rem;
-  font-weight: bold;
-  padding: 8px 15px;
-  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 50%, #3498db 100%);
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.2);
-}
-
-.username::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: 0.5s;
-}
-
-.username:hover::before {
-  left: 100%;
-}
-
-.username:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.3);
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 50%, #3498db 100%);
-}
-
 .logout-btn {
   background: linear-gradient(135deg, #27ae60 0%, #2ecc71 50%, #3498db 100%);
   color: #ffffff;
@@ -872,56 +1133,6 @@ h2 {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(46, 204, 113, 0.3);
   background: linear-gradient(135deg, #2ecc71 0%, #27ae60 50%, #3498db 100%);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .container {
-    margin: 80px 20px 30px;
-    padding: 30px 20px;
-  }
-  
-  .section {
-    padding: 20px;
-  }
-  
-  .card {
-    padding: 20px;
-  }
-  
-  #saved-passwords {
-    grid-template-columns: 1fr;
-  }
-  
-  h1 {
-    font-size: 1.5rem;
-  }
-  
-  h2 {
-    font-size: 1.8rem;
-  }
-  
-  .nav-buttons {
-    gap: 10px;
-  }
-  
-  button {
-    padding: 14px;
-    font-size: 1rem;
-  }
-  
-  #search-bar {
-    padding: 14px 18px;
-  }
-  
-  .password-item {
-    padding: 20px;
-  }
-  
-  .user-info {
-    flex-direction: column;
-    gap: 10px;
-  }
 }
 
 /* Loading Animation */
@@ -1582,142 +1793,5 @@ h2 {
   .social-btn {
     width: 100%;
     justify-content: center;
-  }
-}
-
-/* Save Password Section */
-#save-password {
-  margin: 30px 0;
-  padding: 30px;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
-  border: 2px solid rgba(46, 204, 113, 0.2);
-  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.1);
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  position: relative;
-  overflow: hidden;
-}
-
-#save-password::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, #27ae60, #3498db);
-}
-
-#save-password h3 {
-  font-size: 1.8rem;
-  color: #2c3e50;
-  margin-bottom: 20px;
-  background: linear-gradient(90deg, #2c3e50, #27ae60, #3498db);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 3s infinite;
-}
-
-#save-password .input-group {
-  margin-bottom: 20px;
-  position: relative;
-}
-
-#save-password input {
-  width: 100%;
-  padding: 16px 20px;
-  border: 2px solid #e0e0e0;
-  border-radius: 12px;
-  font-size: 1rem;
-  background: rgba(255, 255, 255, 0.9);
-  color: #2c3e50;
-  transition: all 0.3s ease;
-  margin: 0;
-}
-
-#save-password input:focus {
-  outline: none;
-  border-color: #27ae60;
-  box-shadow: 0 0 20px rgba(46, 204, 113, 0.15);
-  transform: translateY(-2px);
-}
-
-#save-password input::placeholder {
-  color: #95a5a6;
-  font-size: 0.95rem;
-}
-
-#save-password .save-btn {
-  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 50%, #3498db 100%);
-  color: white;
-  padding: 16px;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-#save-password .save-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.3);
-}
-
-#save-password .save-btn i {
-  font-size: 1.2rem;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .navbar {
-    padding: 12px 20px;
-  }
-  
-  .navbar-container {
-    padding: 0 15px;
-  }
-  
-  .nav-buttons {
-    gap: 15px;
-  }
-  
-  .dropdown-btn {
-    padding: 10px 20px;
-    min-width: 100px;
-    height: 40px;
-    font-size: 0.9rem;
-  }
-  
-  .dropdown-content {
-    min-width: 180px;
-  }
-  
-  #save-password {
-    padding: 20px;
-    margin: 20px 0;
-  }
-  
-  #save-password h3 {
-    font-size: 1.5rem;
-  }
-  
-  #save-password input {
-    padding: 14px 18px;
-    font-size: 0.95rem;
-  }
-  
-  #save-password .save-btn {
-    padding: 14px;
-    font-size: 1rem;
   }
 }
