@@ -7,12 +7,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Form, HTTPException
 from pydantic import BaseModel
 import mysql.connector
+from typing import Optional
 
 app = FastAPI()
 
 class PasswordEntry(BaseModel):
     name: str
     password: str
+
+# Store current user
+current_user: Optional[str] = None
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
@@ -55,6 +59,7 @@ app.add_middleware(
 
 @app.post("/login/")
 async def login(username: str = Form(...), password: str = Form(...)):
+    global current_user
     connection = get_db_connection()
     if not connection:
         return {"status": "error", "message": "Database connection failed"}
@@ -67,10 +72,21 @@ async def login(username: str = Form(...), password: str = Form(...)):
     connection.close()
 
     if result and result[0] == password:
-        return {"status": "success", "message": "Login successful!"}
+        current_user = username
+        return {"status": "success", "message": "Login successful!", "username": username}
     return {"status": "error", "message": "Invalid credentials"}
 
+# Get current user
+@app.get("/current_user")
+async def get_current_user():
+    return {"username": current_user}
 
+# Logout
+@app.post("/logout")
+async def logout():
+    global current_user
+    current_user = None
+    return {"status": "success", "message": "Logged out successfully"}
 
 # After signup
 
@@ -130,7 +146,7 @@ async def get_saved_passwords():
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     message = "Backend Connected!"
-    return templates.TemplateResponse("home.html", {"request": request, "message": message})
+    return templates.TemplateResponse("home.html", {"request": request, "message": message, "current_user": current_user})
 
 # Login Page
 
