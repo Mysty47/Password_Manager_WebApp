@@ -23,6 +23,7 @@ class PasswordEntry(BaseModel):
 current_user: Optional[str] = None
 current_user_id: Optional[int] = None
 
+# Declares the static directory 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 templates = Jinja2Templates(directory="app/templates")
