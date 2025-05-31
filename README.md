@@ -218,7 +218,7 @@ Interactive API documentation is available at:
 
 ## 👨‍💼 Author
 
-Built with ❤️ by **[Mysty47](https://github.com/Mysty47)**
+Built by **[Mysty47](https://github.com/Mysty47)**
 
 ---
 
