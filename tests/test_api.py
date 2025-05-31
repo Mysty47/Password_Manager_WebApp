@@ -8,12 +8,16 @@ import bcrypt
 import os
 from cryptography.fernet import Fernet
 from unittest.mock import patch, MagicMock, call # Remove PropertyMock import
+from fastapi.templating import Jinja2Templates
 
 # Import the actual get_db dependency
 from app.db.database import get_db
 # Import the actual modules and variables we need to modify
 import main # Import the main module to access globals directly
 from app.api.auth import user_encryption_keys # Import the dictionary
+
+# Create a test templates directory
+templates = Jinja2Templates(directory="app/templates")
 
 # Create a pytest fixture for the test client with dependency overrides and module mocks
 @pytest.fixture
@@ -31,35 +35,28 @@ def test_app_and_mocks():
         # Configure the FastAPI app to use the mocked dependency
         app.dependency_overrides[get_db] = lambda: mock_conn
 
-        # --- Start: Direct manipulation of global state and patching dictionary ---
         # Store original values to restore later
         original_current_user = main.current_user
         original_current_user_id = main.current_user_id
         original_user_encryption_keys = user_encryption_keys.copy()
 
-        # Patch the encryption keys dictionary. We'll manipulate current_user/id directly.
+        # Patch the encryption keys dictionary
         with patch.dict('app.api.auth.user_encryption_keys', {}, clear=True) as mock_user_encryption_keys:
-            # Provide the TestClient and mocks to the tests
             with TestClient(app) as client:
-                 # Yield the client, connection mocks, and the patched dictionary
-                 # We no longer yield mocks for current_user/id as we are setting them directly
-                 yield client, mock_conn, mock_cursor, mock_user_encryption_keys
+                yield client, mock_conn, mock_cursor, mock_user_encryption_keys
 
-        # --- End: Direct manipulation of global state and patching dictionary ---
-
-    # Teardown: Restore the dependency override and original global state after the test finishes
-    app.dependency_overrides = {}
-    main.current_user = original_current_user
-    main.current_user_id = original_current_user_id
-    user_encryption_keys.clear()
-    user_encryption_keys.update(original_user_encryption_keys)
+        # Teardown
+        app.dependency_overrides = {}
+        main.current_user = original_current_user
+        main.current_user_id = original_current_user_id
+        user_encryption_keys.clear()
+        user_encryption_keys.update(original_user_encryption_keys)
 
 def test_read_main(test_app_and_mocks):
-    # The fixture now only yields 4 values
     client, mock_conn, mock_cursor, mock_user_encryption_keys = test_app_and_mocks
     response = client.get("/")
     assert response.status_code == 200
-    # The home page content assertion might need adjustment based on template rendering
+    assert "Backend Connected!" in response.text
 
 def test_signup_with_mocks(test_app_and_mocks):
     # The fixture now only yields 4 values
