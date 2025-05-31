@@ -1,17 +1,82 @@
-# Password Manager WebApp
+# 🔐 Password Manager WebApp
 
-A simple password manager web application that allows users to securely generate, store, and manage their passwords. The application includes user authentication (login/signup), password labeling, and persistent storage via a local MySQL database.
+## 🎯 1.1Project Purpose
+This project is a web-based password manager designed to help users securely store and manage their passwords for various online services. It aims to provide a simple and safe way for individuals to handle sensitive credentials without relying on external tools.
 
----
+## ⚙️ 1.2Core Functionalities
+User registration and login with basic validation
+
+Secure password storage using encryption
+
+Add new entries (service name, username, password)
+
+View and search saved passwords
+
+Delete existing password entries
+
+Clean, user-friendly interface
+
+## 👥 1.3Target Users
+This app is designed for individuals who:
+
+Have accounts on multiple platforms
+
+Want a centralized and secure password manager
+
+Prefer to use a simple, lightweight, self-hosted solution
+
+## 📚 1.4Use Cases
+
+Add password: The user adds a new password with service name, username, and encrypted password.
+
+View passwords: The user logs in and sees a list of all stored credentials.
+
+Generate secure passwords: You can generate random secure password, with the help of 1 button.
+
+Register/Login: New users create an account; existing users sign in to access their data.
+
+##🏗️ Project Architecture and Technology Choices
+
+## 🔧 2.1 – Technology Justification
+This project uses Flask as the web framework due to its simplicity and suitability for small-to-medium web applications. SQLite is used as the database engine because it is lightweight and easy to integrate, especially for local or prototype apps. The frontend uses standard HTML/CSS, which allows for clear structure and user-friendly design.
+
+## 🧱 2.2 – Architecture Model
+The application follows a Model-View-Controller (MVC)-like architecture:
+
+Model: The database (SQLite) and logic for managing stored passwords.
+
+View: HTML templates in the /templates folder for rendering the UI.
+
+Controller: Application logic and routes defined in app.py.
+
+This structure keeps the codebase clean and modular, making it easier to maintain and expand.
+
+## 🗂️ 2.3 – Module Separation and Dependencies
+The project is organized as follows:
+
+All application routes and business logic are in app.py.
+
+HTML files are inside the templates/ folder.
+
+Static assets like CSS are placed in the static/ directory.
+
+Password entries are stored securely in database.db.
+
+This modular layout separates concerns and simplifies debugging and enhancements.
+
+## 🔄 2.4 – Maintainability and Expandability
+Thanks to Flask’s modular design and the separation of logic and templates, the app can be easily extended. For example, adding new features like password generation, exporting to CSV, or two-factor authentication would only require minimal additions to the existing routes and templates without needing to restructure the core.
+
+
 
 ## 🚀 Features
 
-* ✅ User registration and login
-* ✅ Random password generation
-* ✅ Save personal passwords with labels
-* ✅ Store all data in a local MySQL database
-* ✅ RESTful API interface between frontend and backend
-* ✅ Docker support (to be added)
+✅ User registration and login
+✅ Random password generation
+✅ Save personal passwords with custom labels
+✅ Store all data in a local **MySQL** database
+✅ RESTful API interface (with Swagger documentation)
+✅ **Dockerized** deployment with `docker-compose`
 
 ---
 
@@ -19,99 +84,102 @@ A simple password manager web application that allows users to securely generate
 
 ```
 Password_Manager_WebApp/
-├── static/              # CSS and JavaScript files
-├── templates/           # HTML pages
-├── main.py              # Backend server and logic
+├── static/              # Frontend static files (CSS, JS)
+├── templates/           # HTML templates
+├── main.py              # FastAPI backend logic
 ├── requirements.txt     # Python dependencies
+├── docker-compose.yml   # Docker orchestration
+├── Dockerfile           # Backend container configuration
 └── README.md            # Project documentation
 ```
 
 ---
 
-## 🧪 Setup Instructions (Local)
+## 🧪 Local Development Setup
 
-1. **Clone the repository**
+### 1. Clone the Repository
 
-   ```bash
-   git clone https://github.com/yourusername/Password_Manager_WebApp.git
-   cd Password_Manager_WebApp
-   ```
+```
+git clone https://github.com/Mysty47/Password_Manager_WebApp.git
+cd Password_Manager_WebApp
+```
 
-2. **Install dependencies**
+### 2. Start the Application with Docker
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+```
+docker-compose up
+```
 
-3. **Prepare the MySQL database**
+* Access the app at: [http://localhost:8000](http://localhost:8000)
+* Swagger UI for API testing: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-   * Create a local MySQL database
-   * Set up the required `users` and `passwords` tables (refer to `main.py`)
+### 3. Shut Down the Application
 
-4. **Run the application**
+Press `Ctrl + C`, then run:
 
-   ```bash
-   uvicorn main:app --reload
-   ```
+```
+docker-compose down
+```
 
-5. **Access the app**
+### 4. Access the MySQL Database
 
-   ```
-   http://127.0.0.1:8000
-   ```
-
----
-
-## 🐳 Docker (Coming Soon)
-
-The project will include:
-
-* `Dockerfile` for containerizing the FastAPI backend
-* `docker-compose.yml` to orchestrate MySQL and the backend API
+```
+docker-compose exec db mysql -u root -p
+```
 
 ---
 
-## 🔐 Security & Best Practices (Planned/Partially Implemented)
+## 🔧 MySQL Database Setup (Schema Overview)
 
-* Secure storage of user credentials (password hashing – upcoming)
-* Input validation and error handling
-* Environment variables for configuration
-* Protection against common attacks (e.g., SQL Injection – planned)
+The application uses two main tables:
+
+* `users` – Stores user credentials (with password hashing – planned)
+* `passwords` – Stores labeled passwords per user
+
+Refer to `main.py` for schema creation scripts if not using Docker.
 
 ---
 
-## 📡 API Design
-
-The backend follows a RESTful API architecture. The following endpoints are implemented or planned:
+## 📱 API Endpoints
 
 | Method | Endpoint     | Description                   |
 | ------ | ------------ | ----------------------------- |
 | POST   | `/signup`    | Register a new user           |
 | POST   | `/login`     | Authenticate user credentials |
 | POST   | `/generate`  | Generate a random password    |
-| POST   | `/save`      | Save a custom password        |
+| POST   | `/save`      | Save a labeled password       |
 | GET    | `/passwords` | Retrieve all saved passwords  |
 
-> **Swagger UI** is available at [`/docs`](http://127.0.0.1:8000/docs) for interactive API testing.
+Interactive API documentation is available at:
+➡️ **[http://localhost:8000/docs](http://localhost:8000/docs)**
 
 ---
 
-## 📌 Future Improvements
+## 🔐 Planned Security Improvements
 
-* Add password encryption before saving in the database
-* Add user sessions / JWT authentication
-* Responsive frontend for mobile use
-* Full Docker support
-* Unit testing and CI integration
+* 🔐 Hashing passwords with **bcrypt**
+* ✅ Input validation and error handling
+* 📆 Using **environment variables** for sensitive config
+* 🛡️ Protection against SQL Injection and other attacks
+* 🔐 Password encryption before DB storage
 
 ---
 
-## 👨‍💻 Author
+## 🛠️ Future Enhancements
 
-Built with ❤️ by \Mysty47
+* JWT-based authentication and user sessions
+* Mobile-responsive frontend design
+* Unit tests and CI/CD integration
+* Docker networking and volume improvements
+
+---
+
+## 👨‍💼 Author
+
+Built with ❤️ by **[Mysty47](https://github.com/Mysty47)**
 
 ---
 
 ## 📄 License
 
-This project is open-source and available under the MIT License.
+This project is licensed under the **MIT License** – feel free to use and contribute!
