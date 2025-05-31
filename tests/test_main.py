@@ -3,9 +3,11 @@ from fastapi.templating import Jinja2Templates
 from main import app
 import pytest
 from pathlib import Path
+import os
 
-# Create a test templates directory
-templates = Jinja2Templates(directory="app/templates")
+# Get the absolute path to the templates directory
+TEMPLATES_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "app", "templates")
+templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 @pytest.fixture
 def client():

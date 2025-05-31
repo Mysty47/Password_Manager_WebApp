@@ -16,8 +16,9 @@ from app.db.database import get_db
 import main # Import the main module to access globals directly
 from app.api.auth import user_encryption_keys # Import the dictionary
 
-# Create a test templates directory
-templates = Jinja2Templates(directory="app/templates")
+# Get the absolute path to the templates directory
+TEMPLATES_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "app", "templates")
+templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 # Create a pytest fixture for the test client with dependency overrides and module mocks
 @pytest.fixture
