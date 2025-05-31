@@ -1,9 +1,9 @@
 # 🔐 Password Manager WebApp
 
-## 🎯 Project Purpose
+## 🎯 1.1Project Purpose
 This project is a web-based password manager designed to help users securely store and manage their passwords for various online services. It aims to provide a simple and safe way for individuals to handle sensitive credentials without relying on external tools.
 
-## ⚙️ Core Functionalities
+## ⚙️ 1.2Core Functionalities
 User registration and login with basic validation
 
 Secure password storage using encryption
@@ -16,7 +16,7 @@ Delete existing password entries
 
 Clean, user-friendly interface
 
-## 👥 Target Users
+## 👥 1.3Target Users
 This app is designed for individuals who:
 
 Have accounts on multiple platforms
@@ -25,7 +25,7 @@ Want a centralized and secure password manager
 
 Prefer to use a simple, lightweight, self-hosted solution
 
-## 📚 Use Cases
+## 📚 1.4Use Cases
 
 Add password: The user adds a new password with service name, username, and encrypted password.
 
@@ -35,7 +35,39 @@ Generate secure passwords: You can generate random secure password, with the hel
 
 Register/Login: New users create an account; existing users sign in to access their data.
 
----
+##🏗️ Project Architecture and Technology Choices
+
+## 🔧 2.1 – Technology Justification
+This project uses Flask as the web framework due to its simplicity and suitability for small-to-medium web applications. SQLite is used as the database engine because it is lightweight and easy to integrate, especially for local or prototype apps. The frontend uses standard HTML/CSS, which allows for clear structure and user-friendly design.
+
+## 🧱 2.2 – Architecture Model
+The application follows a Model-View-Controller (MVC)-like architecture:
+
+Model: The database (SQLite) and logic for managing stored passwords.
+
+View: HTML templates in the /templates folder for rendering the UI.
+
+Controller: Application logic and routes defined in app.py.
+
+This structure keeps the codebase clean and modular, making it easier to maintain and expand.
+
+## 🗂️ 2.3 – Module Separation and Dependencies
+The project is organized as follows:
+
+All application routes and business logic are in app.py.
+
+HTML files are inside the templates/ folder.
+
+Static assets like CSS are placed in the static/ directory.
+
+Password entries are stored securely in database.db.
+
+This modular layout separates concerns and simplifies debugging and enhancements.
+
+## 🔄 2.4 – Maintainability and Expandability
+Thanks to Flask’s modular design and the separation of logic and templates, the app can be easily extended. For example, adding new features like password generation, exporting to CSV, or two-factor authentication would only require minimal additions to the existing routes and templates without needing to restructure the core.
+
+
 
 ## 🚀 Features
 
