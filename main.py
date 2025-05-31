@@ -21,6 +21,7 @@ class PasswordEntry(BaseModel):
 
 # Store current user
 current_user: Optional[str] = None
+current_user_id: Optional[int] = None
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 

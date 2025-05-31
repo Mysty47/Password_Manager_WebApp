@@ -35,9 +35,7 @@
     <div class="login-form">
       <input type="text" id="username" placeholder="Username" required>
       <input type="password" id="password" placeholder="Password" required>
-      <a href="login.html">
-        <button onclick="signup()">Sign up</button>
-      </a>
+      <button onclick="signup()">Sign up</button>
     </div>
   </div>
 
@@ -64,6 +62,7 @@
 
       if (result.status === "success") {
         alert(result.message);
+        window.location.href = '/login.html';
       } else {
         alert(result.message);
       }

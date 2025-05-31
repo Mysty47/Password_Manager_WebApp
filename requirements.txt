@@ -3,5 +3,7 @@ uvicorn
 jinja2
 mysql-connector-python
 python-multipart
+cryptography
 pytest
 httpx
+bcrypt
