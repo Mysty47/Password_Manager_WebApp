@@ -1,6 +1,39 @@
 # 🔐 Password Manager WebApp
 
-A simple and secure **Password Manager Web Application** built with **FastAPI** and **MySQL**, allowing users to generate, store, and manage passwords with labeled entries. Designed with security in mind and an intuitive RESTful API interface.
+# 🎯 Project Purpose
+This project is a web-based password manager designed to help users securely store and manage their passwords for various online services. It aims to provide a simple and safe way for individuals to handle sensitive credentials without relying on external tools.
+
+# ⚙️ Core Functionalities
+User registration and login with basic validation
+
+Secure password storage using encryption
+
+Add new entries (service name, username, password)
+
+View and search saved passwords
+
+Delete existing password entries
+
+Clean, user-friendly interface
+
+# 👥 Target Users
+This app is designed for individuals who:
+
+Have accounts on multiple platforms
+
+Want a centralized and secure password manager
+
+Prefer to use a simple, lightweight, self-hosted solution
+
+# 📚 Use Cases
+
+Add password: The user adds a new password with service name, username, and encrypted password.
+
+View passwords: The user logs in and sees a list of all stored credentials.
+
+Generate secure passwords: You can generate random secure password, with the help of 1 button.
+
+Register/Login: New users create an account; existing users sign in to access their data.
 
 ---
 
