@@ -1,9 +1,9 @@
 # 🔐 Password Manager WebApp
 
-## 🎯 1.1Project Purpose
+## 🎯 1.1 - Project Purpose
 This project is a web-based password manager designed to help users securely store and manage their passwords for various online services. It aims to provide a simple and safe way for individuals to handle sensitive credentials without relying on external tools.
 
-## ⚙️ 1.2Core Functionalities
+## ⚙️ 1.2 - Core Functionalities
 User registration and login with basic validation
 
 Secure password storage using encryption
@@ -16,34 +16,76 @@ Delete existing password entries
 
 Clean, user-friendly interface
 
-## 👥 1.3Target Users
-This app is designed for individuals who:
+## 🧑‍💻 1.3 - User Stories
 
-Have accounts on multiple platforms
+As a new user, I want to register with a secure password so that I can create a personal account.
 
-Want a centralized and secure password manager
+As a registered user, I want to log in with my credentials so that I can access my data.
 
-Prefer to use a simple, lightweight, self-hosted solution
+As a user, I want to store login credentials (website, username, password) so that I can manage my online accounts.
 
-## 📚 1.4Use Cases
+As a user, I want my passwords to be encrypted so that my data stays secure.
 
-Add password: The user adds a new password with service name, username, and encrypted password.
+As a user, I want to view all stored credentials in a list so that I can easily retrieve them.
 
-View passwords: The user logs in and sees a list of all stored credentials.
+As a user, I want to be able to update or delete existing credentials so that I can keep my information up to date.
 
-Generate secure passwords: You can generate random secure password, with the help of 1 button.
+As a user, I want a clean and intuitive interface so that I can use the app efficiently and securely.
 
-Register/Login: New users create an account; existing users sign in to access their data.
+## 📄 1.4 - Use Cases
+### UC1: User Registration
+Actor: New user
+
+Description: A user fills out a registration form with a username and password. The password is hashed and stored.
+
+Successful Outcome: The user account is created and stored in the database.
+
+### UC2: User Login
+Actor: Registered user
+
+Description: The user enters their username and password. If credentials are valid, access is granted.
+
+Successful Outcome: The user is authenticated and redirected to the dashboard.
+
+### UC3: Add New Password Entry
+Actor: Authenticated user
+
+Description: The user fills in the website, username, and password fields. The password is encrypted and saved.
+
+Successful Outcome: The new password entry appears in the user's list.
+
+### UC4: View Stored Credentials
+Actor: Authenticated user
+
+Description: The user navigates to the dashboard and sees a list of all saved credentials.
+
+Successful Outcome: Credentials are listed with relevant details.
+
+### UC5: Edit or Delete a Credential
+Actor: Authenticated user
+
+Description: The user selects a credential and updates its information or deletes it.
+
+Successful Outcome: The credential is updated or removed from the database.
+
+### UC6: User Logout
+Actor: Any logged-in user
+
+Description: The user clicks a logout button, ending the session.
+
+Successful Outcome: The user is redirected to the login screen.
+
+
 
 ##🏗️ Project Architecture and Technology Choices
 
 ## 🔧 2.1 – Technology Justification
-This project uses Flask as the web framework due to its simplicity and suitability for small-to-medium web applications. SQLite is used as the database engine because it is lightweight and easy to integrate, especially for local or prototype apps. The frontend uses standard HTML/CSS, which allows for clear structure and user-friendly design.
+This project uses Flask as the web framework due to its simplicity and suitability for small-to-medium web applications. MySQL is used as the database engine because it is lightweight and easy to integrate, especially for local or prototype apps. The frontend uses standard HTML/CSS, which allows for clear structure and user-friendly design.
 
 ## 🧱 2.2 – Architecture Model
 The application follows a Model-View-Controller (MVC)-like architecture:
 
-Model: The database (SQLite) and logic for managing stored passwords.
+Model: The database (MySQL) and logic for managing stored passwords.
 
 View: HTML templates in the /templates folder for rendering the UI.
 
