@@ -1,117 +1,123 @@
-# Password Manager WebApp
+🔐 Password Manager WebApp
 
-A simple password manager web application that allows users to securely generate, store, and manage their passwords. The application includes user authentication (login/signup), password labeling, and persistent storage via a local MySQL database.
+A simple and secure Password Manager Web Application built with FastAPI and MySQL, allowing users to generate, store, and manage passwords with labeled entries. Designed with security in mind and an intuitive RESTful API interface.
 
----
+🚀 Features
 
-## 🚀 Features
+✅ User registration and login✅ Random password generation✅ Save personal passwords with custom labels✅ Store all data in a local MySQL database✅ RESTful API interface (with Swagger documentation)✅ Dockerized deployment with docker-compose
 
-* ✅ User registration and login
-* ✅ Random password generation
-* ✅ Save personal passwords with labels
-* ✅ Store all data in a local MySQL database
-* ✅ RESTful API interface between frontend and backend
-* ✅ Docker support (to be added)
+📁 Project Structure
 
----
-
-## 📁 Project Structure
-
-```
 Password_Manager_WebApp/
-├── static/              # CSS and JavaScript files
-├── templates/           # HTML pages
-├── main.py              # Backend server and logic
+├── static/              # Frontend static files (CSS, JS)
+├── templates/           # HTML templates
+├── main.py              # FastAPI backend logic
 ├── requirements.txt     # Python dependencies
+├── docker-compose.yml   # Docker orchestration
+├── Dockerfile           # Backend container configuration
 └── README.md            # Project documentation
-```
 
----
+🧪 Local Development Setup
 
-## 🧪 Setup Instructions (Local)
+1. Clone the Repository
 
-1. **Clone the repository**
+git clone https://github.com/Mysty47/Password_Manager_WebApp.git
+cd Password_Manager_WebApp
 
-   ```bash
-   git clone https://github.com/yourusername/Password_Manager_WebApp.git
-   cd Password_Manager_WebApp
-   ```
+2. Start the Application with Docker
 
-2. **Install dependencies**
+docker-compose up
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+Access the app at: http://localhost:8000
 
-3. **Prepare the MySQL database**
+Swagger UI for API testing: http://localhost:8000/docs
 
-   * Create a local MySQL database
-   * Set up the required `users` and `passwords` tables (refer to `main.py`)
+3. Shut Down the Application
 
-4. **Run the application**
+Press Ctrl + C, then run:
 
-   ```bash
-   uvicorn main:app --reload
-   ```
+docker-compose down
 
-5. **Access the app**
+4. Access the MySQL Database
 
-   ```
-   http://127.0.0.1:8000
-   ```
+docker-compose exec db mysql -u root -p
 
----
+🔧 MySQL Database Setup (Schema Overview)
 
-## 🐳 Docker (Coming Soon)
+The application uses two main tables:
 
-The project will include:
+users – Stores user credentials (with password hashing – planned)
 
-* `Dockerfile` for containerizing the FastAPI backend
-* `docker-compose.yml` to orchestrate MySQL and the backend API
+passwords – Stores labeled passwords per user
 
----
+Refer to main.py for schema creation scripts if not using Docker.
 
-## 🔐 Security & Best Practices (Planned/Partially Implemented)
+📱 API Endpoints
 
-* Secure storage of user credentials (password hashing – upcoming)
-* Input validation and error handling
-* Environment variables for configuration
-* Protection against common attacks (e.g., SQL Injection – planned)
+Method
 
----
+Endpoint
 
-## 📡 API Design
+Description
 
-The backend follows a RESTful API architecture. The following endpoints are implemented or planned:
+POST
 
-| Method | Endpoint     | Description                   |
-| ------ | ------------ | ----------------------------- |
-| POST   | `/signup`    | Register a new user           |
-| POST   | `/login`     | Authenticate user credentials |
-| POST   | `/generate`  | Generate a random password    |
-| POST   | `/save`      | Save a custom password        |
-| GET    | `/passwords` | Retrieve all saved passwords  |
+/signup
 
-> **Swagger UI** is available at [`/docs`](http://127.0.0.1:8000/docs) for interactive API testing.
+Register a new user
 
----
+POST
 
-## 📌 Future Improvements
+/login
 
-* Add password encryption before saving in the database
-* Add user sessions / JWT authentication
-* Responsive frontend for mobile use
-* Full Docker support
-* Unit testing and CI integration
+Authenticate user credentials
 
----
+POST
 
-## 👨‍💻 Author
+/generate
 
-Built with ❤️ by \Mysty47
+Generate a random password
 
----
+POST
 
-## 📄 License
+/save
 
-This project is open-source and available under the MIT License.
+Save a labeled password
+
+GET
+
+/passwords
+
+Retrieve all saved passwords
+
+Interactive API documentation is available at:➡️ http://localhost:8000/docs
+
+🔐 Planned Security Improvements
+
+🔐 Hashing passwords with bcrypt
+
+✅ Input validation and error handling
+
+📆 Using environment variables for sensitive config
+
+🛡️ Protection against SQL Injection and other attacks
+
+🔐 Password encryption before DB storage
+
+🛠️ Future Enhancements
+
+JWT-based authentication and user sessions
+
+Mobile-responsive frontend design
+
+Unit tests and CI/CD integration
+
+Docker networking and volume improvements
+
+👨‍💼 Author
+
+Built with ❤️ by Mysty47
+
+📄 License
+
+This project is licensed under the MIT License – feel free to use and contribute!
