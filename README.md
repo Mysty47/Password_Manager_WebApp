@@ -80,12 +80,12 @@ Successful Outcome: The user is redirected to the login screen.
 ##🏗️ Project Architecture and Technology Choices
 
 ## 🔧 2.1 – Technology Justification
-This project uses Flask as the web framework due to its simplicity and suitability for small-to-medium web applications. SQLite is used as the database engine because it is lightweight and easy to integrate, especially for local or prototype apps. The frontend uses standard HTML/CSS, which allows for clear structure and user-friendly design.
+This project uses Flask as the web framework due to its simplicity and suitability for small-to-medium web applications. MySQL is used as the database engine because it is lightweight and easy to integrate, especially for local or prototype apps. The frontend uses standard HTML/CSS, which allows for clear structure and user-friendly design.
 
 ## 🧱 2.2 – Architecture Model
 The application follows a Model-View-Controller (MVC)-like architecture:
 
-Model: The database (SQLite) and logic for managing stored passwords.
+Model: The database (MySQL) and logic for managing stored passwords.
 
 View: HTML templates in the /templates folder for rendering the UI.
 
