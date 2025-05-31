@@ -8,6 +8,7 @@ from fastapi import FastAPI, Form, HTTPException
 from pydantic import BaseModel
 import mysql.connector
 from typing import Optional
+import os
 
 app = FastAPI()
 
@@ -23,15 +24,14 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
 
 # Database connection
-
 def get_db_connection():
     try:
         connection = mysql.connector.connect(
-        host="127.0.0.1",
-        port=3307,
-        user="root",
-        password="parola1",
-        database="login_info"
+            host=os.getenv("DB_HOST", "127.0.0.1"),
+            port=int(os.getenv("DB_PORT", "3306")),
+            user=os.getenv("DB_USER", "root"),
+            password=os.getenv("DB_PASSWORD", "parola1"),
+            database=os.getenv("DB_NAME", "login_info")
         )
         return connection
     except mysql.connector.Error as err:

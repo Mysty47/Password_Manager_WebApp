@@ -35,7 +35,7 @@ async function savePassword() {
 
    // Send the password to FastAPI
    try {
-       const response = await fetch("http://127.0.0.1:8000/save_password/", {
+       const response = await fetch("http://localhost:8000/save_password/", {
            method: "POST",
            headers: {
                "Content-Type": "application/json"
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function fetchPasswords() {
   try {
-      const response = await fetch("http://127.0.0.1:8000/saved_passwords"); // Adjust the URL if needed
+      const response = await fetch("http://localhost:8000/saved_passwords"); // Adjust the URL if needed
       const data = await response.json();
 
       if (data.passwords) {
@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", fetchPasswords);
 // Function to fetch saved passwords and display them
 async function loadPasswords() {
   try {
-      const response = await fetch("http://127.0.0.1:8000/saved_passwords");
+      const response = await fetch("http://localhost:8000/saved_passwords");
       const data = await response.json();
 
       const passwordContainer = document.getElementById("saved-passwords");
