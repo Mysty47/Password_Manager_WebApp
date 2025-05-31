@@ -60,17 +60,30 @@ app.include_router(passwords.router, tags=["passwords"])
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     message = "Backend Connected!"
-    return templates.TemplateResponse(request, "home.html", {"request": request, "message": message, "current_user": current_user})
+    context = {
+        "request": request,
+        "message": message,
+        "current_user": current_user
+    }
+    return templates.TemplateResponse("home.html", context)
 
 # Login Page
 @app.get("/login.html", response_class=HTMLResponse)
 async def login_page(request: Request):
-    return templates.TemplateResponse(request, "login.html", {"request": request})
+    context = {
+        "request": request,
+        "current_user": current_user
+    }
+    return templates.TemplateResponse("login.html", context)
 
 # Signup Page
 @app.get("/signup.html", response_class=HTMLResponse)
 async def signup_page(request: Request):
-    return templates.TemplateResponse(request, "signup.html", {"request": request})
+    context = {
+        "request": request,
+        "current_user": current_user
+    }
+    return templates.TemplateResponse("signup.html", context)
 
 # After login
 @app.post("/login/")

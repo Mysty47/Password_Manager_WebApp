@@ -38,10 +38,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         
-    - name: Create necessary directories
+    - name: Create necessary directories and copy files
       run: |
         mkdir -p app/templates
         mkdir -p app/static
+        cp -r app/templates/* app/templates/ 2>/dev/null || true
+        cp -r app/static/* app/static/ 2>/dev/null || true
         
     - name: Run tests
       env:
