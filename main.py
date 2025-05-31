@@ -10,6 +10,9 @@ import mysql.connector
 from typing import Optional
 import os
 
+# Import the routers
+from app.api import auth, passwords
+
 app = FastAPI()
 
 class PasswordEntry(BaseModel):
@@ -38,15 +41,7 @@ def get_db_connection():
         print("Database Connection Error:", err)
         return None
 
-
-
-# Temporary storage of login info
-
-# saved_passwords = []
-# saved_login_info ={"" : ""}
-
 # Enable CORS
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -55,8 +50,27 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# After login
+# Include the routers
+app.include_router(auth.router, tags=["auth"])
+app.include_router(passwords.router, tags=["passwords"])
 
+# Home page
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request):
+    message = "Backend Connected!"
+    return templates.TemplateResponse("home.html", {"request": request, "message": message, "current_user": current_user})
+
+# Login Page
+@app.get("/login.html", response_class=HTMLResponse)
+async def login_page(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+# Signup Page
+@app.get("/signup.html", response_class=HTMLResponse)
+async def signup_page(request: Request):
+    return templates.TemplateResponse("signup.html", {"request": request})
+
+# After login
 @app.post("/login/")
 async def login(username: str = Form(...), password: str = Form(...)):
     global current_user
@@ -89,7 +103,6 @@ async def logout():
     return {"status": "success", "message": "Logged out successfully"}
 
 # After signup
-
 @app.post("/signup/")
 async def signup(username: str = Form(...), password: str = Form(...)):
     connection = get_db_connection()
@@ -106,7 +119,6 @@ async def signup(username: str = Form(...), password: str = Form(...)):
     return {"status": "success", "message": "Signup successful!"}
 
 # Saving the password
-
 @app.post("/save_password/")
 async def save_password(entry: PasswordEntry):
     connection = get_db_connection()
@@ -125,7 +137,6 @@ async def save_password(entry: PasswordEntry):
         return {"status": "error", "message": str(err)}
 
 # After saving password
-
 @app.get("/saved_passwords")
 async def get_saved_passwords():
     connection = get_db_connection()
@@ -134,42 +145,6 @@ async def get_saved_passwords():
 
     cursor = connection.cursor(dictionary=True)
     cursor.execute("SELECT name, password FROM login_info.saved_passwords")
-    passwords = cursor.fetchall()
-
-    cursor.close()
-    connection.close()
-
-    return {"passwords": passwords}
-    
-# Home page
-
-@app.get("/", response_class=HTMLResponse)
-async def read_root(request: Request):
-    message = "Backend Connected!"
-    return templates.TemplateResponse("home.html", {"request": request, "message": message, "current_user": current_user})
-
-# Login Page
-
-@app.get("/login.html", response_class=HTMLResponse)
-async def login_page(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
-
-# Signup Page
-
-@app.get("/signup.html", response_class=HTMLResponse)
-async def signup_page(request: Request):
-    return templates.TemplateResponse("signup.html", {"request": request})
-
-# Saved Passwords
-
-@app.get("/saved_passwords")
-async def get_saved_passwords():
-    connection = get_db_connection()
-    if not connection:
-        return {"status": "error", "message": "Database connection failed"}
-
-    cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT name, password FROM saved_passwords")
     passwords = cursor.fetchall()
 
     cursor.close()
