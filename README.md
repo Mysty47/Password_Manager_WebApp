@@ -171,6 +171,12 @@ docker-compose exec db mysql -u root -p
 
 ---
 
+### 5. Activating venv for tests
+
+```
+venv\Scripts\activate.bat
+```
+
 ## 🔧 MySQL Database Setup (Schema Overview)
 
 The application uses two main tables:
