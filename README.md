@@ -169,6 +169,21 @@ docker-compose down
 docker-compose exec db mysql -u root -p
 ```
 
+### Use the db
+```
+USE login_info;
+```
+
+### See inside the webappdb table
+```
+SELECT * FROM webappdb;
+```
+
+### See inside the saved_passwords table
+```
+SELECT * FROM saved_passwords;
+```
+
 ---
 
 ### 5. Activating venv for tests
@@ -179,10 +194,12 @@ venv\Scripts\activate.bat
 
 ## 🔧 MySQL Database Setup (Schema Overview)
 
+* `login_info` - name of the database
+
 The application uses two main tables:
 
-* `users` – Stores user credentials (with password hashing – planned)
-* `passwords` – Stores labeled passwords per user
+* `webappdb` – Stores user credentials (with password hashing – planned)
+* `saved_passwords` – Stores labeled passwords per user
 
 Refer to `main.py` for schema creation scripts if not using Docker.
 
