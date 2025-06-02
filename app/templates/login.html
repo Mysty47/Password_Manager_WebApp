@@ -32,10 +32,10 @@
     <h2>Password Manager</h2>
     <p class="intro">Manage your passwords securely and easily</p>
 
-    <div class="login-form">
+    <div class="login-form" id="login-form">
       <input type="text" id="username" placeholder="Username" required>
       <input type="password" id="password" placeholder="Password" required>
-      <button onclick="login()">Login</button>
+      <button type="submit" onclick="login()">Login</button>
     </div>
 
     <div class="signup">
@@ -57,20 +57,25 @@
       formData.append("username", username);
       formData.append("password", password);
 
-      const response = await fetch("http://127.0.0.1:8000/login/", {
-        method: "POST",
-        body: formData
-      });
+      try {
+        const response = await fetch("http://127.0.0.1:8000/login/", {
+          method: "POST",
+          body: formData
+        });
 
-      const result = await response.json();
+        const result = await response.json();
 
-      if (result.status === "success") {
-        alert(result.message);
-        localStorage.setItem("loggedIn", "true");
-        localStorage.setItem("username", result.username);
-        window.location.href = '/';
-      } else {
-        alert(result.message);
+        if (result.status === "success") {
+          alert("Login successful!");
+          localStorage.setItem("loggedIn", "true");
+          localStorage.setItem("username", result.username);
+          window.location.href = '/';
+        } else {
+          alert(result.message);
+        }
+      } catch (error) {
+        console.error("Login error:", error);
+        alert("An error occurred during login.");
       }
     }
 

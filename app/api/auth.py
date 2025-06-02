@@ -11,6 +11,7 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.fernet import Fernet # Import Fernet for encryption
 
 from app.db.database import get_db_connection, get_db
+import main # Move import to the top
 
 router = APIRouter()
 
@@ -47,7 +48,7 @@ async def login(username: str = Form(...), password: str = Form(...), connection
                 kdf = PBKDF2HMAC(
                     algorithm=hashes.SHA256(),
                     length=32,
-                    salt=encryption_salt,
+                    salt=bytes(encryption_salt), # Convert salt to bytes
                     iterations=100000,
                 )
                 key = base64.urlsafe_b64encode(kdf.derive(password.encode('utf-8')))
@@ -59,7 +60,6 @@ async def login(username: str = Form(...), password: str = Form(...), connection
                 if user_id_result:
                     user_id = user_id_result[0]
                     # In a real app, store this securely in a session
-                    import main
                     main.current_user = username # Keep username for temporary key lookup
                     main.current_user_id = user_id # Store user ID globally (temporarily)
 
@@ -71,7 +71,13 @@ async def login(username: str = Form(...), password: str = Form(...), connection
 
     except mysql.connector.Error as err:
         print(f"Database Error during login: {err}")
-        return {"status": "error", "message": "An error occurred during login."}
+        return {"status": "error", "message": f"Database error during login: {err}"}
+    except ImportError as e:
+        print(f"Import Error during login: {e}")
+        return {"status": "error", "message": f"Server configuration error: {e}"}
+    except Exception as e:
+        print(f"An unexpected error occurred during login: {e}")
+        return {"status": "error", "message": f"An unexpected error occurred during login: {e}"}
     finally:
         cursor.close()
         # connection.close() # Connection is closed by the dependency's finally block

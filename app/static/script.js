@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Simulate login (Replace this with actual authentication logic)
-document.getElementById("login-form")?.addEventListener("submit", async function (event) {
+document.querySelector("#login-form button[type='submit']")?.addEventListener("click", async function (event) {
     event.preventDefault(); // Prevent actual form submission
 
     const usernameInput = document.querySelector('#login-form input[type="text"]');
