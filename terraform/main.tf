@@ -1,63 +1,55 @@
-terraform {
-  required_providers {
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "~> 3.0"
-    }
-  }
-}
-
-provider "docker" {}
-
-# Create a Docker network
 resource "docker_network" "password_manager_network" {
   name = "password_manager_network"
 }
 
-# Create a Docker volume for the database
 resource "docker_volume" "db_volume" {
   name = "password_manager_db_volume"
 }
 
-# Create the database container
 resource "docker_container" "db" {
   name  = "password_manager_db"
-  image = "postgres:latest"
-  
+  image = "mysql:8.0"
+
   env = [
-    "POSTGRES_USER=${var.db_user}",
-    "POSTGRES_PASSWORD=${var.db_password}",
-    "POSTGRES_DB=${var.db_name}"
+    "MYSQL_ROOT_PASSWORD=parola1",
+    "MYSQL_DATABASE=login_info"
   ]
-  
+
   networks_advanced {
     name = docker_network.password_manager_network.name
   }
-  
+
   volumes {
     volume_name    = docker_volume.db_volume.name
-    container_path = "/var/lib/postgresql/data"
+    container_path = "/var/lib/mysql"
   }
-  
+
   ports {
-    internal = 5432
-    external = var.db_port
+    internal = 3306
+    external = 3306
   }
 }
 
-# Create the web application container
 resource "docker_container" "web_app" {
   name  = "password_manager_web"
   image = "password_manager_web:latest"
-  
+
+  env = [
+    "DB_HOST=password_manager_db",
+    "DB_PORT=3306",
+    "DB_USER=root",
+    "DB_PASSWORD=parola1",
+    "DB_NAME=login_info"
+  ]
+
   networks_advanced {
     name = docker_network.password_manager_network.name
   }
-  
+
   ports {
     internal = 8000
-    external = var.web_app_port
+    external = 8000
   }
-  
+
   depends_on = [docker_container.db]
-} 
+}
